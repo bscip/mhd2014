@@ -39,7 +39,7 @@ require(
     $, _, Backbone, Marionette, OA, vent,
     SearchResults, SearchResultsView,
     CurrentArtist, CurrentArtistView,
-    Facets, FacetsView,
+    Facets, FacetsView
   ) {
 
   // initialize our Marionette app

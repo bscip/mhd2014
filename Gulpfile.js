@@ -20,6 +20,15 @@ var gulp = require('gulp'),
     EXPRESS_ROOT = __dirname
     ;
 
+gulp.task('mg_test', function() {
+  console.log('here');
+  var secret = require('./util/secret'),
+  MusicGraphApi = require('./util/musicgraph'),
+  MG = new MusicGraphApi(secret.api_key_musicgraph);
+  MG.similarArtists(function(err, data) {
+    console.dir(data);
+  });
+});
 
 // Styles
 gulp.task('styles', function() {

@@ -3,3 +3,4 @@ node_modules
 util/secret.js
 app/scripts/min/*.js
 app/css/*.css
+.idea
