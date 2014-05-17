@@ -28,6 +28,7 @@ gulp.task('mg_test', function() {
   MG.similarArtists(function(err, data) {
     console.dir(data);
   });
+});
 
 gulp.task('oa', function() {
   var OA = require('openaura-api');

@@ -14,9 +14,10 @@ var MusicGraphApi = (function() {
   MusicGraph.prototype.similarArtists = function(cb) {
     var url = '';
     request.get({url: url, json: true}, function(error, resp, data) {
+      console.log(error)
       console.dir(data)
       // cb("this is an error", null)
-      cb(null, {"my data": "some data"})
+      cb(null, {"oh data": "my data"})
     });
   };
 
