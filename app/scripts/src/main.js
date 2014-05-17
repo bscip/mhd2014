@@ -34,12 +34,14 @@ require(
     'models/search_results', 'models/search_results_view',
     'models/current_artist', 'models/current_artist_view',
     'models/facets', 'models/facets_view',
+    'models/similars', 'models/similars_view',
   ], 
   function (
     $, _, Backbone, Marionette, OA, vent,
     SearchResults, SearchResultsView,
     CurrentArtist, CurrentArtistView,
     Facets, FacetsView,
+    Similars, SimilarsView
   ) {
 
   // initialize our Marionette app
@@ -161,6 +163,13 @@ require(
   });
 
   vent.on('similar:setup', function(current_artist) {
+    var i, len;
+
+    similars = new Similars();
+    similarsView = new SimilarsView({
+      collection: similars
+    });
+    contentLayout_similar.similars.show(similarsView);
   });
 
 
