@@ -8,14 +8,36 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
   </head>
   <body>
-    <div id="main-header">
-      <h1>{{title}}</h1>
+    <div id="main-header" class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+          <h1>{{title}}</h1>
+        </div>
+      </div>
     </div>
-    <div id="main-container">
+    <div id="main-container" class="container-fluid">
+      <div class="row">
+        <div id="search-container" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+          <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+              <input type="text" id="search_input" placeholder="Search for an Artist!"/>
+              <span><i class="fa fa-search"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div id="content-container" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+        </div>
+      </div>
     </div>
     <div id="main-footer">
     </div>
-    <script type="text/template" id="template-oa-artist">
+    <script type="text/template" id="t-main-layout">
+      <div id="selectors"></div>
+      <div id="particles"></div>
+    </script>
+    <script type="text/template" id="t-search_result">
       <%= name %>
     </script>
 
