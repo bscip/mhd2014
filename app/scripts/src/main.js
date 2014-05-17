@@ -32,10 +32,14 @@ require(
   [
     'jquery', 'lodash', 'backbone', 'marionette', 'oa', 'vent',
     'models/search_results', 'models/search_results_view',
+    'models/current_artist', 'models/current_artist_view',
+    'models/facets', 'models/facets_view',
   ], 
   function (
     $, _, Backbone, Marionette, OA, vent,
-    SearchResults, SearchResultsView
+    SearchResults, SearchResultsView,
+    CurrentArtist, CurrentArtistView,
+    Facets, FacetsView,
   ) {
 
   // initialize our Marionette app
@@ -44,6 +48,8 @@ require(
       contentLayout_similar, ContentLayout_similar,
       contentLayout_similar_details, ContentLayout_similar_details,
       searchResults, searchResultsView,
+      currentArtistView,
+      facets, facetsView,
       // other global vars
       current_selected_artist,
       current_similar_artist_selected
@@ -128,14 +134,34 @@ require(
 
 
   vent.on('current:setup', function(artist) {
+    var aidata = {};
+    OA.ArtistInfo.fetchByOaArtistId(artist.oa_artist_id, function(ai) {
+      aidata.bio = ai.bio();
+      aidata.styles = ai.styleTags().media[0].data.tags;
+      aidata.profile_image_src = ai.profilePhoto().last().url();
+      currentArtistView = new CurrentArtistView({
+        model: new CurrentArtist(aidata)
+      });
+      contentLayout_similar.current.show(currentArtistView);
+    });
   });
 
   vent.on('facets:setup', function() {
+    var i, len,
+        facet_types = [ 'name', 'image', 'bio', 'media', 'tweet' ];
+
+    facets = new Facets();
+    facetsView = new FacetsView({
+      collection: facets
+    });
+    for(i=0, len=facet_types.length; i<len; i++) {
+      facets.add({type: facet_types[i], index: i});
+    }
+    contentLayout_similar.facets.show(facetsView);
   });
 
   vent.on('similar:setup', function(current_artist) {
   });
-
 
 
   // SIMILAR SELECTED
