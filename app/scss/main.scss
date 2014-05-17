@@ -1,0 +1,17 @@
+@import "bourbon";
+@import "neat";
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  h1 {
+    color: white;
+    border-bottom: 1px solid lightblue;
+    @include linear-gradient(50deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #ff0 100%);
+  }
+  #main-container {
+  }
+}

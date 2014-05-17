@@ -1,0 +1,34 @@
+{
+  "name": "gulp-sample",
+  "version": "0.0.0",
+  "author": "Brian Scipione",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "gulp": "^3.6.1",
+    "gulp-livereload": "~1.3.1",
+    "gulp-rename": "~1.2.0",
+    "gulp-concat": "~2.2.0",
+    "gulp-minify-css": "~0.3.1",
+    "gulp-uglify": "~0.2.1",
+    "gulp-notify": "~1.2.5",
+    "gulp-autoprefixer": "0.0.7",
+    "gulp-jshint": "~1.5.3",
+    "gulp-clean": "~0.2.4",
+    "gulp-cache": "~0.1.3",
+    "gulp-sass": "~0.7.1",
+    "gulp-imagemin": "~0.2.0",
+    "express": "~4.0.0",
+    "connect-livereload": "~0.4.0",
+    "tiny-lr": "0.0.5",
+    "handlebars": "~2.0.0-alpha.2",
+    "consolidate": "~0.10.0",
+    "node-bourbon": "~1.2.1",
+    "node-neat": "~1.3.0",
+    "request": "~2.34.0",
+    "moment": "~2.6.0"
+  },
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "lodash": "~2.4.1"
+  }
+}
