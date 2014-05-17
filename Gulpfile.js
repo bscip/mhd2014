@@ -23,7 +23,7 @@ var gulp = require('gulp'),
 
 // Styles
 gulp.task('styles', function() {
-  return gulp.src('app/css/main.scss')
+  return gulp.src('app/scss/main.scss')
     .pipe(sass({ style: 'expanded', includePaths: require('node-bourbon').includePaths.concat(require('node-neat').includePaths), }))
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
     .pipe(gulp.dest('app/css'))
@@ -36,7 +36,7 @@ gulp.task('styles', function() {
 
 // Scripts
 gulp.task('scripts', function() {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src('app/scripts/src/**/*.js')
     //.pipe(jshint('.jshintrc'))
     //.pipe(jshint.reporter('default'))
     .pipe(concat('main.js'))

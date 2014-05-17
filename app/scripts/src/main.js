@@ -1,11 +1,11 @@
 require.config({
   paths: {
-    jquery: 'lib/jquery', 
-    jqueryUI: 'lib/jquery-ui-1.10.3.custom',
-    lodash: 'lib/lodash-2.1.0',
-    backbone: 'lib/backbone',
-    marionette: 'lib/backbone.marionette',
-    oa: 'lib/oa-all.min'
+    jquery: '../lib/jquery', 
+    jqueryUI: '../lib/jquery-ui-1.10.3.custom',
+    lodash: '../lib/lodash-2.1.0',
+    backbone: '../lib/backbone',
+    marionette: '../lib/backbone.marionette',
+    oa: '../lib/oa-all.min'
   },
   shim: {
     jquery: {
