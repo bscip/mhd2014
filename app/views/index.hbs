@@ -27,15 +27,35 @@
         </div>
       </div>
       <div class="row">
-        <div id="content-container" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+        <div id="search-results-container" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
         </div>
       </div>
     </div>
     <div id="main-footer">
     </div>
-    <script type="text/template" id="t-main-layout">
-      <div id="selectors"></div>
-      <div id="particles"></div>
+    <script type="text/template" id="t-layout-similar">
+      <div id="left-container">
+        <div id="current-container">
+        </div>
+        <div id="facets-container">
+        </div>
+      </div>
+      <div id="right-container">
+        <div id="similar-container">
+        </div>
+      </div>
+    </script>
+    <script type="text/template" id="t-layout-similar-details">
+      <div id="top-container">
+        <div id="current-container">
+        </div>
+        <div id="similar-selected-container">
+        </div>
+      </div>
+      <div id="bottom-container">
+        <div id="similar-details-container">
+        </div>
+      </div>
     </script>
     <script type="text/template" id="t-search_result">
       <%= name %>

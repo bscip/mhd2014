@@ -25,7 +25,7 @@ define('models/search_result_view', ['marionette', 'vent'], function(Marionette,
       this.$el.html( template );
     },
     select: function() {
-      vent.trigger('artist:selected', this.model.attributes.oa_artist_id);
+      vent.trigger('artist:selected', this.model.attributes);
     }
   });
 });

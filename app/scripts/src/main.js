@@ -41,8 +41,12 @@ require(
   // initialize our Marionette app
   var app = new Marionette.Application(),
       // models, collections, views, layouts:
-      contentLayout, ContentLayout,
-      searchResults, searchResultsView
+      contentLayout_similar, ContentLayout_similar,
+      contentLayout_similar_details, ContentLayout_similar_details,
+      searchResults, searchResultsView,
+      // other global vars
+      current_selected_artist,
+      current_similar_artist_selected
       ;
   // initialize our OA sdk interface
   window.MHDapp = app;
@@ -55,7 +59,8 @@ require(
 
   // Our main region for displaying content/search-results
   app.addRegions({
-    content: '#content-container'
+    main: '#main-container',
+    search_results: '#search-results-container'
   });
 
   app.addInitializer(function() {
@@ -63,19 +68,6 @@ require(
     searchResults = new SearchResults();
     searchResultsView = new SearchResultsView({
       collection: searchResults
-    });
-    // Setup our layout that we'll use after an artist is selected
-    ContentLayout = Marionette.Layout.extend({
-      className: 'main-layout',
-      regions: {
-        current: '#current-container',
-        similar: '#similar-container',
-        facets: '#facets-container'
-      },
-      render: function() {
-        var template = _.template($('#t-main-layout').html(), {});
-        this.$el.html( template );
-      },
     });
   });
 
@@ -93,7 +85,7 @@ require(
   // ARTIST SEARCH
   vent.on('artist:search', function(req) {
     searchResults.reset();
-    app.content.show(searchResultsView);
+    app.search_results.show(searchResultsView);
 
     $.ajax({
       type: 'GET',
@@ -110,6 +102,64 @@ require(
     });
   });
 
+  // ARTIST SELECTED
+  vent.on('artist:selected', function(artist) {
+    current_selected_artist = artist;
+    // switch out our main region to show our first layout
+    ContentLayout_similar = Marionette.Layout.extend({
+      className: 'main-layout',
+      regions: {
+        current: '#current-container',
+        similar: '#similar-container',
+        facets: '#facets-container'
+      },
+      render: function() {
+        var template = _.template($('#t-layout-similar').html(), {});
+        this.$el.html( template );
+      }
+    });
+    contentLayout_similar = new ContentLayout_similar();
+    app.main.show(contentLayout_similar);
+
+    vent.trigger('current:setup', artist);
+    vent.trigger('facets:setup');
+    vent.trigger('similar:setup', artist);
+  });
+
+
+  vent.on('current:setup', function(artist) {
+  });
+
+  vent.on('facets:setup', function() {
+  });
+
+  vent.on('similar:setup', function(current_artist) {
+  });
+
+
+
+  // SIMILAR SELECTED
+  vent.on('similar:selected', function(artist) {
+    // switch out our main region to show our first layout
+    ContentLayout_similar_details = Marionette.Layout.extend({
+      className: 'main-layout',
+      regions: {
+        current: '#current-container',
+        similar: '#similar-selected-container',
+        facets: '#similar-details-container'
+      },
+      render: function() {
+        var template = _.template($('#t-layout-similar-details').html(), {});
+        this.$el.html( template );
+      }
+    });
+    contentLayout_similar_details = new ContentLayout_similar_details();
+    app.main.show(contentLayout_similar_details);
+
+    vent.trigger('current:details:setup', artist);
+    vent.trigger('similar:selected:setup', artist);
+    vent.trigger('similar:details:setup', artist);
+  });
 
 
   // start our marionette app
