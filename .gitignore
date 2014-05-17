@@ -1,4 +1,5 @@
 *.swp
+*.swo
 node_modules
 util/secret.js
 app/scripts/min/*.js

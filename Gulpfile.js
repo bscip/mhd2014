@@ -28,6 +28,10 @@ gulp.task('mg_test', function() {
   MG.similarArtists(function(err, data) {
     console.dir(data);
   });
+
+gulp.task('oa', function() {
+  var OA = require('openaura-api');
+  console.dir(OA);
 });
 
 // Styles
@@ -115,7 +119,7 @@ gulp.task('updateLivereload', function(event) {
 //gulp.task('default', ['clean'], function() {
 gulp.task('default', ['startExpress','startLivereload','scripts','styles','images','templates'], function() {
   // Watch .scss files
-  gulp.watch('app/css/**/*.scss', ['styles']);
+  gulp.watch('app/scss/**/*.scss', ['styles']);
   // Watch .js files
   gulp.watch('app/scripts/**/*.js', ['scripts']);
   // Watch image files
