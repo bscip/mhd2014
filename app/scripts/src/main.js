@@ -39,10 +39,13 @@ require(
   // initialize our Marionette app
   var app = new Marionette.Application();
   // initialize our OA sdk interface
+  window.MHDapp = app;
   OA.initialize({
     stream_key: "brian-test",
     info_key: "brian-test"
   });
+
+  app.OA = OA;
 
   // Our main region for displaying content/search-results
   app.addRegions({
