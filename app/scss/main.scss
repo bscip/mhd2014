@@ -11,7 +11,7 @@ body {
   h1 {
     color: white;
     border-bottom: 1px solid lightblue;
-    @include linear-gradient(50deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #ff0 100%);
+    @include linear-gradient(50deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #f00 100%);
   }
 }
 
@@ -41,3 +41,18 @@ body {
   }
 }
 
+.main-layout {
+  #top-container {
+    #current-container {
+    }
+    #facets-container {
+    }
+  }
+  #bottom-container {
+    #similar-container {
+    }
+  }
+}
+
+.details-layout {
+}

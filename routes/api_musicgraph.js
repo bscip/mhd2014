@@ -17,9 +17,12 @@ var api_musicgraph = (function() {
   }
 
   api.prototype.similarArtists = function(req, res) {
-    MG.similarArtists({'artist_name': 'Pearl+Jam'}, function(err, data) {
+    MG.similarArtists({'artist_name': req.query.artist_name}, function(err, data) {
       processResult(res, err, data);
     });
   };
 
+  return api;
 }());
+
+module.exports = api_musicgraph;

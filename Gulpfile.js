@@ -20,6 +20,11 @@ var gulp = require('gulp'),
     EXPRESS_ROOT = __dirname
     ;
 
+gulp.task('oa', function() {
+  var OA = require('openaura-api');
+  console.dir(OA);
+});
+
 gulp.task('mg_test', function() {
   console.log('here');
   var secret = require('./util/secret'),
@@ -29,11 +34,6 @@ gulp.task('mg_test', function() {
     console.log(err)
     console.dir(data);
   });
-});
-
-gulp.task('oa', function() {
-  var OA = require('openaura-api');
-  console.dir(OA);
 });
 
 // Styles
@@ -91,11 +91,15 @@ gulp.task('clean', function() {
 gulp.task('startExpress', function() {
   var express = require('express');
       routes = require('./routes'),
+      API_Musicgraph = require('./routes/api_musicgraph'),
+      api_musicgraph = new API_Musicgraph(),
       http = require('http'),
       path = require('path'),
       cons = require('consolidate'),
       app = express();
 
+console.log('express....');
+console.dir(api_musicgraph.similarArtists);
   // use handlebars
   app.set('views', path.join(EXPRESS_ROOT, 'app/views'));
   app.engine('hbs', cons.handlebars);
@@ -106,6 +110,7 @@ gulp.task('startExpress', function() {
   app.listen(PORT_EXPRESS);
 
   app.get('/', routes.index);
+  app.get('/musicgraph/similar', api_musicgraph.similarArtists);
 });
 
 gulp.task('startLivereload', function() {

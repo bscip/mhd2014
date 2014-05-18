@@ -54,6 +54,7 @@ require(
       facets, facetsView,
       // other global vars
       current_selected_artist,
+      current_similar_set,
       current_similar_artist_selected
       ;
   // initialize our OA sdk interface
@@ -139,6 +140,7 @@ require(
     var aidata = {};
     OA.ArtistInfo.fetchByOaArtistId(artist.oa_artist_id, function(ai) {
       aidata.bio = ai.bio();
+      aidata.name = ai.name();
       aidata.styles = ai.styleTags().media[0].data.tags;
       aidata.profile_image_src = ai.profilePhoto().last().url();
       currentArtistView = new CurrentArtistView({
@@ -157,27 +159,145 @@ require(
       collection: facets
     });
     for(i=0, len=facet_types.length; i<len; i++) {
-      facets.add({type: facet_types[i], index: i});
+      facets.add({
+        type: facet_types[i], 
+        index: i, 
+        active: facet_types[i] === 'name' ? true : false
+      });
     }
     contentLayout_similar.facets.show(facetsView);
   });
 
   vent.on('similar:setup', function(current_artist) {
-    var i, len;
+    similars = new Similars();
+    similarsView = new SimilarsView({
+      collection: similars,
+      options: {type: 'name'}
+    });
+    contentLayout_similar.similar.show(similarsView);
+    $.ajax({
+      type: 'GET',
+      url: '/musicgraph/similar',
+      data: {artist_name: current_artist.name},
+      success: function(data, textStatus) {
+        if (textStatus == 'success') {
+          current_similar_set = data.data;
+          // DEFAULT TO NAME FOR INITIAL SETUP:
+          _.each(data.data, function(d) {
+            OA.ArtistInfo.fetchByOaArtistId(d.oa_artist_id, function(ai) {
+              similars.add(ai.asObject());
+            });
+          });
+        }
+      }
+    });
+  });
+
+  vent.on('facet:name:select', function() {
+    similars = new Similars();
+    similarsView = new SimilarsView({
+      collection: similars,
+      options: {type: 'name'}
+    });
+    contentLayout_similar.similar.show(similarsView);
+    _.each(current_similar_set, function(d) {
+      OA.ArtistInfo.fetchByOaArtistId(d.oa_artist_id, function(ai) {
+        console.dir(ai.asObject());
+        similars.add(ai.asObject());
+      });
+    });
+  });
+  vent.on('facet:image:select', function() {
+    var particle;
 
     similars = new Similars();
     similarsView = new SimilarsView({
-      collection: similars
+      collection: similars,
+      options: {type: 'image'}
     });
-    contentLayout_similar.similars.show(similarsView);
+    contentLayout_similar.similar.show(similarsView);
+    _.each(current_similar_set, function(d) {
+      OA.ArtistInfo.fetchByOaArtistId(d.oa_artist_id, function(ai) {
+        OA.Aura.fetchByOaArtistId(d.oa_artist_id, function(aura) {
+          particle = aura
+            .particles()
+            .withMediaWithin(200,200,1000,2000)
+            .filterByProvider('lastfm')
+            .filterByMedia(function(m) { return m.mediaType() == 'image'; })
+            .first();
+          if (particle) {
+            similars.add(_.extend(ai.asObject(),{url: particle.media().last().url()}));
+          } else {
+            similars.add(_.extend(ai.asObject(),{url: ''}));
+          }
+        });
+      });
+    });
   });
+  vent.on('facet:bio:select', function() {
+    var particle;
+
+    similars = new Similars();
+    similarsView = new SimilarsView({
+      collection: similars,
+      options: {type: 'bio'}
+    });
+    contentLayout_similar.similar.show(similarsView);
+    _.each(current_similar_set, function(d) {
+      OA.ArtistInfo.fetchByOaArtistId(d.oa_artist_id, function(ai) {
+        similars.add(ai.asObject());
+      });
+    });
+  });
+  vent.on('facet:media:select', function() {
+    var particle;
+
+    similars = new Similars();
+    similarsView = new SimilarsView({
+      collection: similars,
+      options: {type: 'media'}
+    });
+    contentLayout_similar.similar.show(similarsView);
+    _.each(current_similar_set, function(d) {
+      OA.ArtistInfo.fetchByOaArtistId(d.oa_artist_id, function(ai) {
+        OA.Aura.fetchByOaArtistId(d.oa_artist_id, function(aura) {
+          particle = aura
+            .particles()
+            .filterByProvider('youtube')
+            .filterByMedia(function(m) { return m.mediaType() == 'embed'; })
+            .first();
+          if (particle) {
+            similars.add(_.extend(ai.asObject(),{url: particle.media().last().url()}));
+          } else {
+            // try soundcloud?
+            OA.Aura.fetchByOaArtistId(d.oa_artist_id, function(aura) {
+              particle = aura
+                .particles()
+                .filterByProvider('soundcloud')
+                .filterByMedia(function(m) { return m.mediaType() == 'embed'; })
+                .first();
+              if (particle) {
+                similars.add(_.extend(ai.asObject(),{url: particle.media().last().url()}));
+              }
+            });
+          }
+        });
+      });
+    });
+  });
+
+
+
+
+
+
 
 
   // SIMILAR SELECTED
   vent.on('similar:selected', function(artist) {
     // switch out our main region to show our first layout
     ContentLayout_similar_details = Marionette.Layout.extend({
-      className: 'main-layout',
+      className: 'details-layout',
       regions: {
         current: '#current-container',
         similar: '#similar-selected-container',

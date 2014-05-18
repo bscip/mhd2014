@@ -12,7 +12,8 @@ define('models/facets_view', ['marionette', 'models/facet_view'], function (Mari
         children.eq(index).before(itemView.el);
       }
     },
+    tagName: 'ul',
     itemView: FacetView,
-    className: 'facets'
+    className: 'facets nav nav-justified'
   });
 });

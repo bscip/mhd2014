@@ -14,6 +14,7 @@ var MusicGraphApi = (function() {
   MusicGraph.prototype.contstructor = MusicGraph;
 
   MusicGraph.prototype.similarArtists = function(params, cb) {
+    console.log('in api module similarArtists', params);
     var url = 'http://api.musicgraph.com/api/v2/artist/search?api_key='+API_KEY+'&similar_to='+params.artist_name;
     request.get({url: url, json: true}, function(error, resp, body) {
       if (error) {
@@ -25,7 +26,7 @@ var MusicGraphApi = (function() {
         var artist_id_get_functions = _.map(artist_names, function(artist_name) {
           return function(pcb) { // these will be executed in async.parallel
             oa_search.artist(artist_name, function(err) {cb(err, null)}, function(raw_data) {
-              pcb(null, raw_data.length > 0 ? raw_data[0].oa_artist_id : null);
+              pcb(null, raw_data.length > 0 ? {oa_artist_id: raw_data[0].oa_artist_id} : null);
             })
           }
         });
@@ -33,7 +34,8 @@ var MusicGraphApi = (function() {
         async.parallel(
             artist_id_get_functions,
             function(err, results) {
-                console.dir(results)
+              console.log('end api mod call');
+              console.dir(results);
                 cb(null, _.compact(results));
             }
         );

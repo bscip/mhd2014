@@ -34,14 +34,20 @@
     <div id="main-footer">
     </div>
     <script type="text/template" id="t-layout-similar">
-      <div id="left-container">
-        <div id="current-container">
-        </div>
-        <div id="facets-container">
+      <div class="row">
+        <div id="top-container" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+          <div class="masthead">
+            <div id="current-container">
+            </div>
+            <div id="facets-container">
+            </div>
+          </div>
         </div>
       </div>
-      <div id="right-container">
-        <div id="similar-container">
+      <div class="row">
+        <div id="bottom-container" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+          <div id="similar-container">
+          </div>
         </div>
       </div>
     </script>
@@ -62,6 +68,32 @@
     </script>
     <script type="text/template" id="t-current-artist">
       <%= name %>
+    </script>
+    <script type="text/template" id="t-facet">
+      <a href="#">
+        <%= type %>
+      </a>
+    </script>
+    <script type="text/template" id="t-similar-name">
+      <a href="#" class="thumbnail">
+        <%= name %>
+      </a>
+    </script>
+    <script type="text/template" id="t-similar-image">
+      <a href="#" class="thumbnail">
+        <img src="<%= url %>"/>
+      </a>
+      <div class="caption">
+        <h4><%= name %></h4>
+      </div>
+    </script>
+    <script type="text/template" id="t-similar-bio">
+      <div class="thumbnail">
+        <%= bio %>
+      </div>
+      <div class="caption">
+        <h4><%= name %></h4>
+      </div>
     </script>
 
     <script data-main="scripts/src/main" src="scripts/lib/require.js"></script>
