@@ -25,7 +25,8 @@ gulp.task('mg_test', function() {
   var secret = require('./util/secret'),
   MusicGraphApi = require('./util/musicgraph'),
   MG = new MusicGraphApi(secret.api_key_musicgraph);
-  MG.similarArtists(function(err, data) {
+  MG.similarArtists({"artist_name" : 'Lady Gaga'}, function(err, data) {
+    console.log(err)
     console.dir(data);
   });
 });
