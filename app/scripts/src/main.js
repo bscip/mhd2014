@@ -228,7 +228,19 @@ require(
           if (particle) {
             similars.add(_.extend(ai.asObject(),{url: particle.media().last().url()}));
           } else {
-            similars.add(_.extend(ai.asObject(),{url: ''}));
+            // ok, use something besides lastfm if we don't have lastfm
+            OA.Aura.fetchByOaArtistId(d.oa_artist_id, function(aura) {
+              particle = aura
+                .particles()
+                .withMediaWithin(200,200,1000,2000)
+                .filterByMedia(function(m) { return m.mediaType() == 'image'; })
+                .first();
+              if (particle) {
+                similars.add(_.extend(ai.asObject(),{url: particle.media().last().url()}));
+              } else {
+                similars.add(_.extend(ai.asObject(),{url: ''}));
+              }
+            });
           }
         });
       });
@@ -264,20 +276,21 @@ require(
           particle = aura
             .particles()
             .filterByProvider('youtube')
-            .filterByMedia(function(m) { return m.mediaType() == 'embed'; })
+            .filterByMedia(function(m) { return m.mediaType() == 'embed' || m.mediaType() == 'video'; })
             .first();
           if (particle) {
-            similars.add(_.extend(ai.asObject(),{url: particle.media().last().url()}));
+            console.dir(particle);
+            similars.add(_.extend(ai.asObject(),{url: particle.media().first().url()}));
           } else {
             // try soundcloud?
             OA.Aura.fetchByOaArtistId(d.oa_artist_id, function(aura) {
               particle = aura
                 .particles()
                 .filterByProvider('soundcloud')
-                .filterByMedia(function(m) { return m.mediaType() == 'embed'; })
+                .filterByMedia(function(m) { return m.mediaType() == 'embed' || m.mediaType() == 'video'; })
                 .first();
               if (particle) {
-                similars.add(_.extend(ai.asObject(),{url: particle.media().last().url()}));
+                similars.add(_.extend(ai.asObject(),{url: particle.media().first().url()}));
               }
             });
           }
