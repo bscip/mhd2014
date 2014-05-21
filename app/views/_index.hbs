@@ -4,29 +4,37 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
   </head>
   <body>
-  <div class="wrapper">
-    <div id="main-header" class="main-header">
-      <div class="">
-        <a href='/'>
-          <h1>{{title}}</h1>
-        </a>
+    <div id="main-header" class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+          <a href='/'>
+            <h1>{{title}}</h1>
+          </a>
+        </div>
       </div>
     </div>
-    <div id="main-container" class="main-container">
-      <div id="search-container" class="search-container">
-        <input type="text" id="search_input" placeholder="Search for an Artist!"/>
-        <span><i class="fa fa-search"></i></span>
+    <div id="main-container" class="container-fluid">
+      <div class="row">
+        <div id="search-container" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+          <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+              <input type="text" id="search_input" placeholder="Search for an Artist!"/>
+              <span><i class="fa fa-search"></i></span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div id="search-results-container" class="search-results-container">
+      <div class="row">
+        <div id="search-results-container" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+        </div>
       </div>
     </div>
-    <div class="main-footer">
+    <div id="main-footer">
     </div>
-  </div>
-
     <script type="text/template" id="t-layout-similar">
       <div class="row">
         <div id="top-container" class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">

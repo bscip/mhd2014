@@ -11,13 +11,13 @@ define('models/search_result_view', ['marionette', 'vent'], function(Marionette,
     className: function () {
       var i = this.model.attributes.index
       if (i == 0) {
-        return 'search_result btn btn-success';
+        return 'search_result primary';
       } else if (i > 0 && i <= 10) {
-        return 'search_result btn btn-primary';
+        return 'search_result secondary';
       } else if (i > 10 && i <= 40) {
-        return 'search_result btn btn-info';
+        return 'search_result tertiary';
       } else if (i > 40) {
-        return 'search_result btn btn-default';
+        return 'search_result default';
       }
     },
     render: function() {

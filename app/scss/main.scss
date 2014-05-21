@@ -1,43 +1,85 @@
 @import "bourbon";
 @import "neat";
 
-* {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+$visual-grid: true;
+$visual-grid-color: red;
+$visual-grid-index: front;
+$visual-grid-opacity: 1.0;
+
+#{$all-text-inputs} {
+  border: 1px solid green;
+  font-family: $monospace;
+  font-size: 1.25em;
 }
 
-body {
-  h1 {
-    color: white;
-    border-bottom: 1px solid lightblue;
-    @include linear-gradient(50deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #f00 100%);
+#{$all-text-inputs-hover} {
+  background: yellow;
+}
+
+#{$all-text-inputs-focus} {
+  background: white;
+}
+
+h1 {
+  color: white;
+  border-bottom: 1px solid lightblue;
+  @include linear-gradient(50deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #fff 100%);
+}
+
+.wrapper {
+  @include outer-container;
+  .main-header {
+    @include span-columns(12);
   }
-}
-
-#main-container {
-  #search-container {
-    overflow: auto;
-    input {
-      width: 85%;
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 10px;
+  .main-container {
+    @include span-columns(8);
+    @include shift(2);
+    .search-container {
+      @include span-columns(4 of 8);
+      @include shift(2);
+      @include row();
+      overflow: auto;
+      input {
+        width: 85%;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      span {
+        margin-left: 10px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
-    span {
-      margin-left: 10px;
-      &:hover {
-        cursor: pointer;
+    .search_results {
+      @include span-columns(6 of 8);
+      @include shift(1);
+      @include row();
+      text-align: center;
+      margin-top: 4px;
+      .search_result {
+        padding: 6px;
+        margin: 4px;
+        @include transition (all 1.0s ease-in);
+        &.primary {
+          @include button(simple);
+        }
+        &.secondary {
+          @include button(simple, #f00);
+        }
+        &.tertiary {
+          @include button(simple, #ff0);
+        }
+        &.default {
+          @include button(simple, #ccc);
+        }
       }
     }
   }
-  .search_results {
-    text-align: center;
-    margin-top: 4px;
-    .search_result {
-      padding: 6px;
-      margin: 4px;
-    }
+  .main-footer {
+    @include span-columns(12);
+    @include row(table);
   }
 }
 
